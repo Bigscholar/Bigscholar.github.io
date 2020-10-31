@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+    <!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  
+  <title>最佳链路状态路由协议OLSR分析 - Hi，昊东</title>
+  
+    <link rel="shortcut icon" href="/Bigscholar.github.io/images/favicon.png">
+  
+  
+    <link rel='manifest' href='/manifest.json'>
+  
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/var.css">
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/main.css">
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/typography.css">
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/components.css">
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/nav.css">
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/paginator.css">
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/footer.css">
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/post-list.css">
+
+  
+  
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/post.css">
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <nav id="theme-nav">
+    <div class="inner">
+        <a class="title" href="/">Blog</a>
+        <div class="nav-arrow"></div>
+        <div class="nav-items">
+            <a class="nav-item nav-item-home" href="/">Home</a>
+            
+            
+            <a class="nav-item" href="/Bigscholar.github.io/archives">Archives</a>
+            
+            
+            
+            <a class="nav-item" href="/Bigscholar.github.io/friends">Friends</a>
+            
+            
+            
+            <a class="nav-item" href="/Bigscholar.github.io/projects">Projects</a>
+            
+            
+            
+            <a class="nav-item" href="/Bigscholar.github.io/about">About</a>
+            
+            
+            
+            <a class="nav-item nav-item-github nav-item-icon" href="https://github.com/Bigscholar" target="_blank">&nbsp;</a>
+            
+            
+            
+            <a class="nav-item nav-item-codepen nav-item-icon" href="https://codepen.io/" target="_blank">&nbsp;</a>
+            
+            
+            
+            <a class="nav-item nav-item-patreon nav-item-icon" href="https://www.patreon.com/MrWillCom" target="_blank">&nbsp;</a>
+            
+            
+        </div>
+    </div>
+</nav>
+        <article class="post">
+    <div class="meta">
+        
+        <div class="date" id="date">
+            
+            <span>January</span>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <span>3,</span>
+            <span>2018</span>
+        </div>
+        
+
+        <h2 class="title">最佳链路状态路由协议OLSR分析</h2>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="content">
+        <p><img src="/images/2018_1_3_olsr/olsr_logo.jpg"></p>
+<a id="more"></a>
+<h1 id="最佳链路状态路由协议（OLSR）源代码分析"><a href="#最佳链路状态路由协议（OLSR）源代码分析" class="headerlink" title="最佳链路状态路由协议（OLSR）源代码分析"></a>最佳链路状态路由协议（OLSR）源代码分析</h1><p>·引言</p>
+<p>OLSR是Optimized Link State Routing 的简称，主要用于MANET网络(Mobile Ad hoc network)的路由协议（OLSR）。OLSR是根据MANET的要求，在传统的LS（Link state）协议的基础上优化的。<br>OLSR中的关键概念是多点转播（MPRs），MPRs是在广播洪泛的过程中挑选的转发广播的节点。</p>
+<p>传统的链路状态协议每个节点都转发它收到信息的第一份拷贝，同它相比，OLSR很大程度上减少了转发的信息。在OLSR协议中，链路状态信息都是由被挑选为MPRs的节点产生的，这样减少了在网络中洪泛的控制信息，实现了第二步优化。第三步优化是MPR节点只选择在MPR或者MPR选择者之间传递链接状态信息。因此，同传统LS协议相比，在网络中分布着部分链路状态信息，这些信息将用于路由计算。</p>
+<p>OLSR以路由跳数提供最优路径。这种协议尤其适合大而密集型的网络。</p>
+<h2 id="第一章-代码简述"><a href="#第一章-代码简述" class="headerlink" title="第一章 代码简述"></a>第一章 代码简述</h2><h3 id="1-1关于文件"><a href="#1-1关于文件" class="headerlink" title="1.1关于文件"></a>1.1关于文件</h3><p>据统计，OLSR协议的源代码中共有123个源文件，现将文件介绍如下表。</p>
+<pre><code>文件                    描述
+link_set.c             Olsrd-0.6.0/link_set.c 确定邻居表的信息
+lq_packet.h         对olsr,hello,TC数据包以及其他一些数据结构的定义
+mpr.c                 Olsrd-0.6.0/mpr.c 关于MPR的一些操作
+mpr_selector_set.h     定义了结构体mpr_selector表示MPR选择源节
+neighbor_table.h     对邻居信息数据结构的定义
+neighbor_table.c     对一跳邻居和二跳邻居的处理
+olsr.c                 实现一些全局函数，比如网络拓扑结构的计算
+routing_table.c        路由表的处理
+TC_set.c            TC消息的洪泛</code></pre>
+<h3 id="1-2关于全局变量"><a href="#1-2关于全局变量" class="headerlink" title="1.2关于全局变量"></a>1.2关于全局变量</h3><p>在下面的协议解析中，我们将对用到的全局变量进行分析，如下表。</p>
+<pre><code>全局变量                    数据类型        描述
+olsrport                 nit16_t     OLSR消息发送接收的端口号 
+rt_proto                 nit8_t         路由表计算的所遵循的协议 
+willingness             nit8_t         WILL_ALWAYS的邻居节点集合 
+use_hysteresis             Bool        判断消息是否迟滞 
+min_tc_vtime             float         TC消息vtime的最小取值 
+max_tc_vtime             float         TC消息vtime的最大取值 
+max_jitter                 float         消息传播的最大抖动 
+changes_topology         bool         判断拓扑信息是否变化 
+changes_neighborhood     bool         判断邻居信息是否变化</code></pre>
+<h3 id="1-3-配置变量"><a href="#1-3-配置变量" class="headerlink" title="1.3 配置变量"></a>1.3 配置变量</h3><p>olsr协议中的任何具体实现都必须支持下列配置变量和必须支持通过系统管理可以修改这些配置变量取值的某种机制。</p>
+<pre><code>配置变量名            默认值
+DEF_IP_VERSION         缺省ip协议域 
+DEF_USE_HYST         缺省消息迟滞 
+DEF_LQ_LEVEL         缺省链路质量等级 
+DEF_OLSRPORT         缺省olsr端口号 
+DEF_MIN_TC_VTIME     TC消息vtime最小取值 
+DEF_GW_TYPE         缺省网关类型 </code></pre>
+<h2 id="第二章-OLSR函数调用关系"><a href="#第二章-OLSR函数调用关系" class="headerlink" title="第二章 OLSR函数调用关系"></a>第二章 OLSR函数调用关系</h2><p>OLSR作为一种轮询机制，在初始化完成后，就会长期处于olsr_scheduler循环中，节点担任两种角色，一个是作为消息报发送方，一个是作为消息报接收方，节点需要不断在这两种角色之间切换。我们将其函数调用图制作如下：</p>
+<p><img src="/images/2018_1_3_olsr/hanshu.png"></p>
+<p>当节点担当消息发送方角色时，节点会根据初始化时已经设定好的定时触发器来行动。当olsr_scheduler轮询到walk_timers的时候，节点都会检查所有到期的间隔触发器所指定的函数，来产生和建立节点上的各种消息，generate_hello()，generate_tc()，generate_mid()函数分别产生hello消息，tc消息，mid消息。</p>
+<p>当节点担任接收方角色时，节点会监听多个socket，当某个socket处于可读时，就将接收到的OLSR消息解析并传递给相应的处理函数，用以更新邻域信息库、路由表等。olsr_input_hello()，olsr_input_tc() ,olsr_input_mid()函数分别处理hello消息，tc消息，mid消息。</p>
+<p>节点除了这两个角色之外，处理完所接收到的消息分组后，如果相应的邻域结构或拓扑结构发生改变，节点则会调用olsr_calculate_routing_table()函数对整个网络的路由表进行重新计算。</p>
+<h2 id="第三章-OLSR消息包数据结构"><a href="#第三章-OLSR消息包数据结构" class="headerlink" title="第三章 OLSR消息包数据结构"></a>第三章 OLSR消息包数据结构</h2><p>OLSR使用统一的数据包格式与协议相关的所有数据进行通信。这样做的目的是在不破坏向后兼容性的情况下促进协议的可扩展性。这也提供了将不同“类型”的信息捎带成单个传输的简单方法，并且因此对于给定的实现来优化以利用由网络提供的最大帧大小。这些数据包被嵌入在UDP数据报中，以便通过网络传输。</p>
+<h3 id="3-1-OLSR首部"><a href="#3-1-OLSR首部" class="headerlink" title="3.1 OLSR首部"></a>3.1 OLSR首部</h3><p><img src="/images/2018_1_3_olsr/1.png"></p>
+<ul>
+<li>olsr_common是OLSR协议基本数据包。其中包含以下几部分: </li>
+</ul>
+<ul>
+<li>type：消息类型</li>
+</ul>
+<ul>
+<li>vtime：表示接收后很长时间节点如何确保数据包中的消息有效</li>
+</ul>
+<ul>
+<li>size：消息大小</li>
+</ul>
+<ul>
+<li>orig：发端地址</li>
+</ul>
+<ul>
+<li>ttl：跳数，消息在传递过程中最大跳数，每转发一次，ttl减1</li>
+</ul>
+<ul>
+<li>hops：此消息在传递过程中经历的跳数</li>
+</ul>
+<ul>
+<li>seqno：消息的序列号，这是唯一不变的以确保消息不回被重发</li>
+</ul>
+<p>数据包格式如下：</p>
+<p><img src="/images/2018_1_3_olsr/2.png"></p>
+<h3 id="3-2-Hello消息包"><a href="#3-2-Hello消息包" class="headerlink" title="3.2 Hello消息包"></a>3.2 Hello消息包</h3><p><img src="/images/2018_1_3_olsr/3.png"></p>
+<p>为了适应链路感知，邻居检测和MPR选择信令，以及为了适应未来的扩展，类似于整个分组格式的方法是拍摄。因此，所提出的HELLO消息的格式如下：</p>
+<p><img src="/images/2018_1_3_olsr/4.png"></p>
+<p>3.3 TC 消息包 </p>
+<p><img src="/images/2018_1_3_olsr/5.png"></p>
+<p>TC消息的建议格式如下：</p>
+<p><img src="/images/2018_1_3_olsr/6.png"></p>
+<h2 id="第四章OLSR协议概述"><a href="#第四章OLSR协议概述" class="headerlink" title="第四章OLSR协议概述"></a>第四章OLSR协议概述</h2><h3 id="4-1邻居发现"><a href="#4-1邻居发现" class="headerlink" title="4.1邻居发现"></a>4.1邻居发现</h3><p>邻居发现是基于节点的邻居信息库，通过HELLO消息的传播实现<br>邻居消息库包含关于邻居、2跳邻居、MPRs和MPR的信息。</p>
+<h4 id="4-1-1节点信息的存储"><a href="#4-1-1节点信息的存储" class="headerlink" title="4.1.1节点信息的存储"></a>4.1.1节点信息的存储</h4><p>每个节点都存储自身的信息在结构体link_entry中。</p>
+<p><img src="/images/2018_1_3_olsr/7.png"></p>
+<p>00059-00060：local_iface_addr存储该节点接口ip地址，neighbor_iface_addr存储邻居节点ip地址。<br>00067：neighbor以链接表形式存储邻居节点信息。<br>邻居节点具体信息如下：</p>
+<p><img src="/images/2018_1_3_olsr/8.png"></p>
+<p>Neighbor_entry结构体，用来存储邻居节点信息。记录了邻居节点的总地址，状态，作为MPR的willingnessz值，是否是MPR，是否曾是MPR，覆盖的两跳邻居节点的数量，及节点连接链路的数量以及指向neighbor_2_list链表的指针。其中，成员变量was_mpr用来发现MPR的变化。</p>
+<p><img src="/images/2018_1_3_olsr/9.png"></p>
+<p>这段代码定义了neighbor_2_list_entry的结构体，这是用来存储邻居节点信息的，两跳节点信息以及记录有效时间的链表结构。mid_address存储本节点的其他接口ip地址。其中mid_entry节点链路信息。Mid_entry包含节点主地址，上一节点和下一节点链路，同时还有本节点链路中其他端口信息存储在aliases链表中。</p>
+<h4 id="4-1-2关于节点的具体操作分析"><a href="#4-1-2关于节点的具体操作分析" class="headerlink" title="4.1.2关于节点的具体操作分析"></a>4.1.2关于节点的具体操作分析</h4><p><img src="/images/2018_1_3_olsr/10.png"></p>
+<p>函数功能：重置所有节点信息。<br>00095-00103：遍历所有节点一遍，把所有信息置为初始值，并把邻居节点也设为空值。</p>
+<p><img src="/images/2018_1_3_olsr/11.png"></p>
+<p>函数通过查找main_addr找到节点link_entry，通过lookup_link_status找出节点链路状态。判断其是否是对称状态。<br>00197-00206行查找主地址并找出节点上的其他端口ip判断该节点其他端口aliases链路状态，并判断该Ip地址所在的链路状态是否是对称状态。只返回对称链路的信息。</p>
+<p><img src="/images/2018_1_3_olsr/12.png"></p>
+<p>函数功能：删除节点链路上所有的信息。<br>定义拓扑边缘节点TC_edge：通过邻居端口地址找出TC_edge边缘链路：<br>00365-00369：删除边缘链路spf；<br>00372-00377：删除邻居链路信息，存储在hash表中的链路表删除；<br>00379-00394：清空一些正在计时的属性，同时释放link的资源空间；<br>同时将change_neighborhood设置为true，让其他节点更新自己的链路状况，发送hello消息包及时更新邻居表的信息。</p>
+<p><img src="/images/2018_1_3_olsr/13.png"></p>
+<p>函数功能：更新链路信息状态，通过hello_message来更新邻居节点的信息。<br>00694-00699：如果该节点不在链路中，把它加入到链路中去，并将计时器更细；<br>00708-00732：通过check_link_status同过发送hello_message发送该节点的邻居链路状态link_type,对不同的状态采取不同的操作；<br>00708-00718：如果是对称或者非对称的需将定时器重新设置，更新定时器。<br>00732：更新邻居节点的状态信息，是对称还是非对称。</p>
+<p><img src="/images/2018_1_3_olsr/14.png"></p>
+<p>函数功能：发送hello消息，维护一个端口的邻居信息。<br>00708-00797：发送Hello_message来维护端口信息，知道消息到达所有的邻居节点，就停止发送，则该端口的所有邻居节点链路都检查完毕。</p>
+<h4 id="4-1-3邻居表的操作"><a href="#4-1-3邻居表的操作" class="headerlink" title="4.1.3邻居表的操作"></a>4.1.3邻居表的操作</h4><h5 id="1-邻居表初始化"><a href="#1-邻居表初始化" class="headerlink" title="1.邻居表初始化"></a>1.邻居表初始化</h5><p><img src="/images/2018_1_3_olsr/15.png"></p>
+<p>函数功能：初始化邻居表。<br>00061-00064：将每一个邻居表neighortable初始化为指向自身的仅有一个节点的链表。</p>
+<h5 id="2-删除操作"><a href="#2-删除操作" class="headerlink" title="2.删除操作"></a>2.删除操作</h5><p><img src="/images/2018_1_3_olsr/16.png"></p>
+<pre><code> 函数功能：删除释放一个两跳邻居节点记录。
+ 00073-00077：获取两跳邻居节点记录中nbr2_list中的邻居节点结构体nbr和两跳邻居节点结构体nbr2;
+ 00079-00082:释放两跳邻居节点结构体nbr2的空间；
+ 00087-00088：将两跳邻居节点记录中的计时器置为空；</code></pre>
+<p><img src="/images/2018_1_3_olsr/17.png"></p>
+<pre><code> 函数功能：将从两跳邻居节点信息中，根据给定的邻居节点地址删除对应的两跳邻居节点.
+ 00111-00113:获取邻居节点的两跳邻居节点信息表；
+ 00115-00121:遍历邻居节点的两跳邻居及节点信息表，直到找到信息表中的两跳邻居节点与给定的两跳邻居节点相同，则删除该两跳邻居节点并返回1，表示删除成功；否则返回0表示没有删除。</code></pre>
+<p><img src="/images/2018_1_3_olsr/18.png"></p>
+<p>函数功能：删除邻居节点信息表（及连带的两跳的两跳邻居节点信息表）<br>00177-00182：寻找邻居节点信息表entry。<br>00189-00197：删除邻居节点信息表即连带的两跳邻居节点信息表。</p>
+<h5 id="3-邻居节点的查找与插入"><a href="#3-邻居节点的查找与插入" class="headerlink" title="3.邻居节点的查找与插入"></a>3.邻居节点的查找与插入</h5><p><img src="/images/2018_1_3_olsr/19.png"></p>
+<p>函数功能：查找给定邻居节点，能否通过该节点连接到一个给定的两跳邻居节点地址。<br>00140：定义返回值entry，用来记录找到的两跳邻居节点信息表结构体。<br>00142-00147：遍历邻居节点的两跳邻居节点信息表，如果找到信息表中存在两跳邻居节点的两跳邻居节点ip地址匹配给定的两跳邻居节点地址，则返回该两跳邻居节点信息表结构体。否则，返回空指针。</p>
+<p><img src="/images/2018_1_3_olsr/20.png"></p>
+<p>函数作用：在邻居节点信息表中插入一条邻居节点信息。如果已存在返回0，否则返回1.<br>00226-00230：检查邻居节点信息表中是否存在要添加的邻居节点信息。<br>00237-00249：添加邻居节点信息并设置内部的地址，willingness，状态等变量的初始化。</p>
+<h5 id="4．邻居表的更新"><a href="#4．邻居表的更新" class="headerlink" title="4．邻居表的更新"></a>4．邻居表的更新</h5><p><img src="/images/2018_1_3_olsr/21.png"></p>
+<p>函数功能：更新邻居信息表中的状态为参数link。<br>00306-00322：如果将连接状态置为SYM_LINK时，如果原来是NOT_SYM则通知网络重新进行MPR选举和路由表更新并删除通过这个邻居节点连接到的两跳邻居节点；<br>00323-00333：否则，如果之前状态为SYM_LINK则通知网络重新进行MPR选举和路由表更新。</p>
+<p>5．其他操作<br>    针对邻居表的操作有许多。比如，olsr_expire_nbr2_list函数的作用是回调两跳邻居节点信息表计时器，olsr_print_neighbor_table函数的作用是打印邻居节点信息表，等等。这里就不详细介绍。</p>
+<h3 id="4-2MPR选择"><a href="#4-2MPR选择" class="headerlink" title="4.2MPR选择"></a>4.2MPR选择</h3><p>MPRS用于把节点的信息传播出去且减少区域内信息重传，因此MPR是经典洪泛算法的一种优化。每个节点在对称一跳链接里独立的选择它的MPRs集合。<br>与MPRS的链接会把在HELLO_message里的链接类型的MPR_NEIGH替换为SYN_NEIGH。</p>
+<h4 id="4-2-1MPR节点的添加和清除"><a href="#4-2-1MPR节点的添加和清除" class="headerlink" title="4.2.1MPR节点的添加和清除"></a>4.2.1MPR节点的添加和清除</h4><p><img src="/images/2018_1_3_olsr/22.png"></p>
+<p>函数作用：添加willingness为WILLALWAYS的邻居节点到MPR集合中。<br>00366-00378：首先将非对称的邻居节点或是不是WILL_ALWAYS的邻居节点忽略，然后将剩余的节点a_neighbor添加到mpr中，并返回添加节点的数量count。</p>
+<p><img src="/images/2018_1_3_olsr/23.png"></p>
+<p>函数作用：将被选为MPR节点的记录清除。<br>00245-00248：如果节点a_neighbor的ismpr值为真的话，那么就将其置为假代表其不是mpr节点，同时将was_mpr置为真，代表该邻居节点曾被选为MPR。<br>00251-00255：遍历邻居节点a_neighbor覆盖的两跳邻居节点的数量置为0。</p>
+<h3 id="4-3拓扑控制消息洪泛"><a href="#4-3拓扑控制消息洪泛" class="headerlink" title="4.3拓扑控制消息洪泛"></a>4.3拓扑控制消息洪泛</h3><p>拓扑控制消息即TC消息，其数据包格式在前面已有介绍，故在此不再介绍。<br>拓扑控制消息的洪泛有着十分重要的意义，每个被选为MPR的节点向网络中所有节点广播TC消息，节点根据“缺省的路由转发算法”转发TC消息。</p>
+<h4 id="4-3-1TC消息初始化与删除"><a href="#4-3-1TC消息初始化与删除" class="headerlink" title="4.3.1TC消息初始化与删除"></a>4.3.1TC消息初始化与删除</h4><p><img src="/images/2018_1_3_olsr/24.png"></p>
+<p>函数功能：初始化TC消息。<br>00195-00203：对TC消息的初始化，从cookie中获取相应的值为TC消息集合的属性赋值；<br>000208：添加已配置好的TC消息到本地节点的TC消息集合。</p>
+<p><img src="/images/2018_1_3_olsr/25.png"></p>
+<p>函数功能：删除TC消息。<br>00289-00292：若宏定义LINUX_NETLINK_ROUTING条件，则删除网关信息，其中网关的删除操作需要对网关协议、网关信息是否为空以及网关信息保存时间是否为空进行判断；<br>00296：删除本地的路由表；<br>00307-00311：将timers参数都设置为空，保证数据和设置的彻底删除。<br>00313-00314：从本地TC消息集合中删除该TC消息，并将TC消息链表的阻塞解除。</p>
+<h3 id="4-4路由表的计算"><a href="#4-4路由表的计算" class="headerlink" title="4.4路由表的计算"></a>4.4路由表的计算</h3><p>   每一个节点都会维护一个路由表用于发送信息。这些路由信息来自于在网络拓扑之上的本地链路信息。因此任一个节点的变动都会引起整个网络拓扑的变化继而影响每个节点维护的路由表的变化。<br>   每一条路由信息都包含信息目的地址、下一跳地址、总跳数、下一跳接口地址。但是在没有路由的节点或者只知道部分信息的节点不包含在路由表内。<br>   具体来说，当发生以下变化的时候，节点的路由表信息才会发生变化：链路集改变、邻居集改变、两跳邻居集改变、网络拓扑集改变、信息库多点接入改变。<br>   在计算X节点的路由的时候使用最小路径算法：</p>
+<ol>
+<li><p>移除所有路由信息；</p>
+</li>
+<li><p>添加所有对称邻居信息，然后把每一个邻居信息的状态N_status=SYM把邻居信息添加到路由列表中，其中</p>
+<blockquote>
+<p>R_dest_addr=L_neighbor_iface_addr</p>
+</blockquote>
+</li>
+</ol>
+<pre><code>&gt; R_next_addr=L_neighbor_iface_addr
+
+
+&gt; R_dist =1</code></pre>
+<h4 id="4-4-1主要数据结构分析"><a href="#4-4-1主要数据结构分析" class="headerlink" title="4.4.1主要数据结构分析"></a>4.4.1主要数据结构分析</h4><p><img src="/images/2018_1_3_olsr/26.png"></p>
+<pre><code>00067-00070：在路由选择的时候使用的复合矩阵，其中包含两个路由之间的花销或者跳数。
+00073-00076：该结构体包含下一跳的网关与接口索引。</code></pre>
+<p>第五章 小结<br>　　正如引言中所述，OLSR以路由跳数提供最优路径。这种协议尤其适合大而密集型的网络。我们将其涉及到的函数、函数间关系、变量、重要数据结构都在文章中做了简要的介绍，并将繁杂的代码梳理成符合逻辑关系的论述，希望读者可以对OLSR有个初步的了解。</p>
+<hr>
+<blockquote>
+<p>“心有猛虎，细嗅蔷薇”</p>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><em>我儿子高玉兰的博客: <a target="_blank" rel="noopener" href="http://studyindut.com/">http://studyindut.com/</a></em></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><em>兴兴的blog: <a target="_blank" rel="noopener" href="http://higuoxing.top/">http://higuoxing.top</a></em></p>
+</blockquote>
+</blockquote>
+<hr>
+<p>技术交流欢迎邮件至<a href="mailto:&#99;&#111;&#108;&#105;&#x6e;&#103;&#117;&#x6f;&#48;&#x39;&#x31;&#57;&#x40;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">&#99;&#111;&#108;&#105;&#x6e;&#103;&#117;&#x6f;&#48;&#x39;&#x31;&#57;&#x40;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;</a></p>
+
+    </div>
+
+    <div class="about">
+        <h1>About this Post</h1>
+        <p>This post is written by 郭昊东, licensed under <a
+                target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/4.0">CC BY-NC 4.0</a>.</p>
+    </div>
+</article>
+        <footer>
+    <div class="inner">
+        <div class="links">
+            
+            <div class="group">
+                <h4 class="title">Blog</h4>
+                
+                <a href="/" class="item" target="_blank">Blog</a>
+                
+                <a href="/archives" class="item" target="_blank">Archives</a>
+                
+                <a href="/friends" class="item" target="_blank">Friends</a>
+                
+                <a href="/projects" class="item" target="_blank">Projects</a>
+                
+                <a href="/about" class="item" target="_blank">About</a>
+                
+                <a href="/atom.xml" class="item" target="_blank">RSS</a>
+                
+            </div>
+            
+            <div class="group">
+                <h4 class="title">Projects</h4>
+                
+                <a href="https://github.com/transmister" class="item" target="_blank">Transmister</a>
+                
+                <a href="https://github.com/MrWillCom/css-and-js-windows-uwp-xaml-controls" class="item" target="_blank">CSS&amp;JS Windows UWP XAML Controls</a>
+                
+                <a href="https://github.com/MrWillCom/hexo-theme-cupertino" class="item" target="_blank">Theme Cupertino</a>
+                
+                <a href="https://github.com/MrWillCom/github-dark-mode" class="item" target="_blank">GitHub Dark Mode</a>
+                
+            </div>
+            
+            <div class="group">
+                <h4 class="title">Me</h4>
+                
+                <a href="https://github.com/Bigscholar" class="item" target="_blank">GitHub</a>
+                
+                <a href="https://codepen.io/mrwillcom" class="item" target="_blank">CodePen</a>
+                
+                <a href="https://www.patreon.com/MrWillCom" class="item" target="_blank">Patreon</a>
+                
+                <a href="mailto:hdbit1030@gmail.com" class="item" target="_blank">Email</a>
+                
+            </div>
+            
+        </div>
+        &copy; 2020 郭昊东<br />
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+</footer>
+
+        
+<script src="/Bigscholar.github.io/js/main.js"></script>
+
+    </body>
+</html>
