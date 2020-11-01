@@ -1,122 +1,192 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-Hans">
-    <!DOCTYPE html>
-<html>
+<html lang="zh-Hans" color-mode=light>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>浅谈Wi-Fi - Hi，昊东</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
   
-    <link rel="shortcut icon" href="/Bigscholar.github.io/images/favicon.png">
+  <meta name="keywords" content="undefined"> 
+  
+  <meta name="description" content="
+
+浅谈Wi-FiThe Development an..."> 
+  
+  <meta name="author" content="郭昊东"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon.png" type="image/png" sizes="16x16">
   
   
-    <link rel='manifest' href='/manifest.json'>
+    <link rel="icon" href="/images/icons/favicon.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon.png">
+    <meta rel="msapplication-TileColor" content="#000000">
   
 
   
-<link rel="stylesheet" href="/Bigscholar.github.io/css/var.css">
+<link rel="stylesheet" href="/Bigscholar.github.io/css/style.css">
+
 
   
-<link rel="stylesheet" href="/Bigscholar.github.io/css/main.css">
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_onl0g0h21np.css">
 
   
-<link rel="stylesheet" href="/Bigscholar.github.io/css/typography.css">
-
-  
-<link rel="stylesheet" href="/Bigscholar.github.io/css/components.css">
-
-  
-<link rel="stylesheet" href="/Bigscholar.github.io/css/nav.css">
-
-  
-<link rel="stylesheet" href="/Bigscholar.github.io/css/paginator.css">
-
-  
-<link rel="stylesheet" href="/Bigscholar.github.io/css/footer.css">
-
-  
-<link rel="stylesheet" href="/Bigscholar.github.io/css/post-list.css">
 
   
   
   
-<link rel="stylesheet" href="/Bigscholar.github.io/css/post.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+  
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        onlyPost: 'false',
+        loading: '/images/theme/loading.gif'
+      },
+      donate: {
+        enable: true,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      motto: {
+        api: '',
+        default: '我在开了灯的床头下，想问问自己的心啊。'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
 
   
 <meta name="generator" content="Hexo 5.2.0"></head>
-    <body>
-        <nav id="theme-nav">
-    <div class="inner">
-        <a class="title" href="/">Blog</a>
-        <div class="nav-arrow"></div>
-        <div class="nav-items">
-            <a class="nav-item nav-item-home" href="/">Home</a>
-            
-            
-            <a class="nav-item" href="/Bigscholar.github.io/archives">Archives</a>
-            
-            
-            
-            <a class="nav-item" href="/Bigscholar.github.io/friends">Friends</a>
-            
-            
-            
-            <a class="nav-item" href="/Bigscholar.github.io/projects">Projects</a>
-            
-            
-            
-            <a class="nav-item" href="/Bigscholar.github.io/about">About</a>
-            
-            
-            
-            <a class="nav-item nav-item-github nav-item-icon" href="https://github.com/Bigscholar" target="_blank">&nbsp;</a>
-            
-            
-            
-            <a class="nav-item nav-item-codepen nav-item-icon" href="https://codepen.io/" target="_blank">&nbsp;</a>
-            
-            
-            
-            <a class="nav-item nav-item-patreon nav-item-icon" href="https://www.patreon.com/MrWillCom" target="_blank">&nbsp;</a>
-            
-            
-        </div>
-    </div>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">浅谈Wi-Fi</div>
+  <div class="right">
+    
+      <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+    
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
 </nav>
-        <article class="post">
-    <div class="meta">
-        
-        <div class="date" id="date">
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <span>December</span>
-            
-            <span>28,</span>
-            <span>2017</span>
-        </div>
-        
 
-        <h2 class="title">浅谈Wi-Fi</h2>
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
     </div>
-
-    <div class="divider"></div>
-
-    <div class="content">
-        <p><img src="/images/wifi/WiFi.png"></p>
-<a id="more"></a>
-<h1 id="浅谈Wi-Fi"><a href="#浅谈Wi-Fi" class="headerlink" title="浅谈Wi-Fi"></a>浅谈Wi-Fi</h1><h1 id="The-Development-and-prospect-of-Wi-Fi-Positioning-Technology"><a href="#The-Development-and-prospect-of-Wi-Fi-Positioning-Technology" class="headerlink" title="The Development and prospect of Wi-Fi Positioning Technology"></a>The Development and prospect of Wi-Fi Positioning Technology</h1><h2 id="摘-要"><a href="#摘-要" class="headerlink" title="摘    要"></a>摘    要</h2><p>随着Wi-Fi的WLAN广泛分布于学校、工厂、办公地点和公共娱乐场所等各个场所。我们已经习惯去到一个商场，或是店铺，开始打开手机，搜索一下周围的WiFi信号。移动上网已经成为我们的一种生活方式，WiFi的覆盖面越来越广。<br>本文首先对Wi-Fi的由来、技术背景和发展情况做了详尽的叙述，对WLAN、Wi－Fi、IEEE 802.11的区别进行了形象的叙述，然后着重研究了Wi-Fi技术的原理，其中包括了Wi-Fi的性能指标，实现Wi-Fi的关键技术，Wi-Fi协议，其次讨论了Wi-Fi的网络的构成，和传输方式，最后对Wi-Fi的应用做了一些介绍，并对Wi-Fi技术未来的发展做出了假设和展望。</p>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/Bigscholar">郭昊东</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/Bigscholar.github.io/images/theme/post-image.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">浅谈Wi-Fi</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>December 28, 2017</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>20023</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h1 id="浅谈Wi-Fi"><a href="#浅谈Wi-Fi" class="headerlink" title="浅谈Wi-Fi"></a>浅谈Wi-Fi</h1><h1 id="The-Development-and-prospect-of-Wi-Fi-Positioning-Technology"><a href="#The-Development-and-prospect-of-Wi-Fi-Positioning-Technology" class="headerlink" title="The Development and prospect of Wi-Fi Positioning Technology"></a>The Development and prospect of Wi-Fi Positioning Technology</h1><h2 id="摘-要"><a href="#摘-要" class="headerlink" title="摘    要"></a>摘    要</h2><p>随着Wi-Fi的WLAN广泛分布于学校、工厂、办公地点和公共娱乐场所等各个场所。我们已经习惯去到一个商场，或是店铺，开始打开手机，搜索一下周围的WiFi信号。移动上网已经成为我们的一种生活方式，WiFi的覆盖面越来越广。<br>本文首先对Wi-Fi的由来、技术背景和发展情况做了详尽的叙述，对WLAN、Wi－Fi、IEEE 802.11的区别进行了形象的叙述，然后着重研究了Wi-Fi技术的原理，其中包括了Wi-Fi的性能指标，实现Wi-Fi的关键技术，Wi-Fi协议，其次讨论了Wi-Fi的网络的构成，和传输方式，最后对Wi-Fi的应用做了一些介绍，并对Wi-Fi技术未来的发展做出了假设和展望。</p>
 <p><strong>关键词：</strong>Wi-Fi；IEEE 802.11</p>
 <h2 id="1、Wi-Fi概述"><a href="#1、Wi-Fi概述" class="headerlink" title="1、Wi-Fi概述"></a>1、Wi-Fi概述</h2><p>Wi-Fi是Wi-Fi联盟制造商的商标做为产品的品牌认证，一个创建于IEEE 802.11标准的无线局域网技术。基于两套系统的密切相关，也常有人把Wi-Fi当做IEEE 802.11标准的同义术语而严格来说并非如此。</p>
 <p>“Wi-Fi”常被写成“WiFi”或“WiFi”，但是它们并没有被Wi-Fi联盟认可。在无线局域网才是指“无线兼容性认证”，实质上是一种商业认证，同时也是一种无线联网技术，与蓝牙技术一样，同属于在办公室和家庭中使用的短距离无线技术。同蓝牙技术相比，它具备更高的传输速率，更远的传播距离，已经广泛应用于笔记本、手机、汽车等广大领域中。</p>
@@ -213,11 +283,11 @@
 <li>STA 站点，每一个连接到无线网络中的终端（如笔记本电脑、 PDA及其它可以联网的用户设备）都可称为一个站点。</li>
 </ol>
 <p>WIFI网络结构如下图所示。由AP和无线网卡组成。AP 一般称为网络桥接器或接入点，它是当作传统的有线局域网络与无线局域网络之间的桥梁，因此任何一台装有无线网卡的PC均可透过AP去分享有线局域网络甚至广域网络的资源，其工作原理相当于一个内置无线发射器的HUB或者是路由，而无线网卡则是负责接收由AP所发射信号的CLJENT端设备</p>
-<p><img src="/images/wifi/1.png" alt="图4-1    WiFi网络结构"></p>
+<p><img   class="lazyload" data-original="/images/wifi/1.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图4-1    WiFi网络结构"></p>
 <p>两种无线网络的拓扑形式</p>
-<p><img src="/images/wifi/2.jpg" alt="图4-2    Infra拓扑图"></p>
+<p><img   class="lazyload" data-original="/images/wifi/2.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图4-2    Infra拓扑图"></p>
 <p>a.    基于AP组建的基础无线网络（Infra）：Infra也称为基础网，是由AP创建，众多 STA加入所组成的无线网络，这种类型的网络的特点是AP是整个网络的中心，网络中所有的通信都通过 AP 来转发完成。</p>
-<p><img src="/images/wifi/3.jpg" alt="图4-3    Adhoc拓扑图"></p>
+<p><img   class="lazyload" data-original="/images/wifi/3.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图4-3    Adhoc拓扑图"></p>
 <p>b.    基于自组网的无线网络（Adhoc）：Adhoc也称为自组网，是仅由两个及以上STA自己组成，网络中不存在 AP，这种类型的网络是一种松散的结构， 网络中所有的 STA 都可以直接通信。</p>
 <h2 id="5-关键技术"><a href="#5-关键技术" class="headerlink" title="5    关键技术"></a>5    关键技术</h2><p>Wi-Fi技术是目前最主流的无线网络标准，虽然标准在很久以前就已经制定了，但是由于技术不成熟所导致的传输速度慢（遗失数据严重），使得市场接受程度偏低。不过自从英特尔公司向市场推出名为迅驰（Centrino）的无线整合技术后，整个无线网络市场又被重新挖掘出来。Wi-Fi正逐渐走向成熟，下面就来介绍下这种逐渐被社会认可的技术的系统原理。</p>
 <h3 id="5-1-Wi-Fi技术性能指标和关键技术"><a href="#5-1-Wi-Fi技术性能指标和关键技术" class="headerlink" title="5.1    Wi-Fi技术性能指标和关键技术"></a>5.1    Wi-Fi技术性能指标和关键技术</h3><h4 id="5-1-1-Wi-Fi的性能指标"><a href="#5-1-1-Wi-Fi的性能指标" class="headerlink" title="5.1.1    Wi-Fi的性能指标"></a>5.1.1    Wi-Fi的性能指标</h4><pre><code>标准                IEEE802.11b        IEEE802.11g            IEEE802.11a
@@ -229,7 +299,7 @@
 <p>在无线局域网市场中,802.11a产品在国外使用广泛,在国内802.11b是无线局域网的主流标准,802.11g由于速率高及与802.11a和802.1lb的兼容性受到了青睐。从发展来看,今后应采用双频三模(802.11a∕b∕g)的产品。双频三模无线产品不但可工作在与802.1la相同的5GHz频段,还可与工作在2.4GHz的802.11b和802.1g产品全面兼容,支持整个802.11a,b,g标准、完整互通性单一平台,实现无线标准的互联与兼容。</p>
 <h4 id="5-1-2-Wi-Fi的关键技术"><a href="#5-1-2-Wi-Fi的关键技术" class="headerlink" title="5.1.2    Wi-Fi的关键技术"></a>5.1.2    Wi-Fi的关键技术</h4><p>正如传闻所言，Wi-Fi所遵循的802.11标准是以前军方所使用的无线电通信技术。而且，至今还是美军军方通信器材对抗电子干扰的重要通信技术。因为，Wi-Fi中所采用的SS（SpreadSpectrum，展频）技术具有非常优良的抗干扰能力，并且当需要反跟踪、反窃听是同时具有很出色的效果，所以不需要担心Wi-Fi技术不能提供稳定的网络服务。而常用的展频技术有如下4种：DD-SS直序展频，FH-SS调频展频，TH-SS跳时展频，C-SS连续波调频。在上面常用的技术中，前两种展频技术很常见，也就是DS-SS和FH-SS。后两种则是根据前面的技术加以变化，也就是TH-SS和C-SS通常不会单独使用，而且整合到其他的展频技术上，组成信号更隐密、功率更低、传输更为精确的混合展频技术。综合来看展频技术有以下方面的优势：反窃听，抗干扰，有限度的保密。</p>
 <p>（1）直序扩频技术</p>
-<p><img src="/images/wifi/4.png" alt="图5-1-2 DSSS的展频过程"></p>
+<p><img   class="lazyload" data-original="/images/wifi/4.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图5-1-2 DSSS的展频过程"></p>
 <p>直序扩频技术，是指把原来功率较高，而且带宽较窄的原始功率频谱分散在很宽广的带宽上，使得在整个发射信号利用很少的能量即可传送出去。</p>
 <p>在传输过程中把单一个0或1的二进制数据使用多个chips（片段）进行传输，然后再接收方进行统计chips的数量来增加抵抗噪声干扰。例如要传送一个1的二进制数据到远程，那么DS-SS会把这个1扩展成三个1，也就是111进行传送。那么即使是在传送中因为干扰，使得原来的三个1成为011、101、110、111信号，但还是能统计1出现的次数来确认该数据为1.通过这种发送多个相同的chips的方式，就比较容易减少噪声对数据的干扰，提高接收方所得到数据的正确性。另外，由于所发送的展频信号会大幅降低传送时的能量，所以在军事用途上会利用该技术把信号隐藏在BackGroundNoise(背景噪音)中，渐少敌人监听到我方通信的信号以及频道。这就是展频技术所隐藏信号的反监听功能了。</p>
 <p>（2）跳频技术</p>
@@ -249,7 +319,7 @@
 <p>相较于802.11DCF/PCF，802.11EDCA/HCCA主要做了一下几个方面的扩充：第一，属于不同优先级的站点在经行二进制回退争抢信道时，需要等待不同的任意帧间隔。与802.11 DCF等待相同的DIFS时间不同，在EDCA中，属于优先级的站点需要等待AIFS；第二，属于不同优先级的站点在经行二进制回退争抢信道时，所用的最大竞争窗口和最小竞争窗口范围不同。优先级越高，最大竞争窗口的数值越小。因此高优先级的站点其计数器的取值较小，可以更早的递减到0；第三，引入了虚拟竞争，在同一个站点内部，802.11e把所有数据包分成8类，映射到4个接入等级，每一个接入等级都对应站点内部的一个队列，当高优先级的队列和低优先级的队列计数器同时到0时，站点内部的调度器会判断高优先级成功发送，而低优先级队列则进行二进制回退，再次争抢信道；第四，引入了TXOP，在820.11e的HCCA机制中，一个控制节点可以优先访问信道，并调度其他QSTA对信道访问。</p>
 <p>综上，802.11e通过为具有不同优先级的QSTA，从而实现了统计意义上的区分服务。</p>
 <h3 id="5-3-Wi-Fi技术的结构"><a href="#5-3-Wi-Fi技术的结构" class="headerlink" title="5.3    Wi-Fi技术的结构"></a>5.3    Wi-Fi技术的结构</h3><h4 id="5-3-1-Wi-Fi技术的网络结构"><a href="#5-3-1-Wi-Fi技术的网络结构" class="headerlink" title="5.3.1    Wi-Fi技术的网络结构"></a>5.3.1    Wi-Fi技术的网络结构</h4><h5 id="5-3-1-1-参考模型"><a href="#5-3-1-1-参考模型" class="headerlink" title="5.3.1.1    参考模型"></a>5.3.1.1    参考模型</h5><p>无线局域网由端站（STA）、接入点（AP）、接入控制器（AC）、AAA服务器以及网元管理单元组成，其网络参考模型如图2-2所示。AAA服务器是提供AAA服务的实体，在参考模型中，AAA服务器支持RADIUS协议。Portal服务器适用于门户网站推送的实体，在Web认证是辅助功能完成认证功能。</p>
-<p><img src="/images/wifi/5.png" alt="图5-3-1无线局域网网络参考模型"></p>
+<p><img   class="lazyload" data-original="/images/wifi/5.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图5-3-1无线局域网网络参考模型"></p>
 <h5 id="5-3-1-2-接口定义"><a href="#5-3-1-2-接口定义" class="headerlink" title="5.3.1.2    接口定义"></a>5.3.1.2    接口定义</h5><p>在该网络模型中，定义了如下接口。</p>
 <ul>
 <li>○1WA接口：STA和接入点之间的接口，即空中接口。</li>
@@ -292,10 +362,10 @@
 <p>（1）无中心网络</p>
 <p>无中心网络是最简单的无线局域网结构，又称为无AP网络，对等网络或Ad-Hoc（特别）网络，它由一组有无线接口的计算机（无线客户端）组成一个独立基本服务集（IBSS），这些无线客户端由相同的工作组名、ESSID和密码，网络中任意两个站点之间均可直接通信。无中心网络的拓扑结构如图2-13所示。</p>
 <p>无中心网络一般使用公用广播信道，每个站点都可竞争公用信道，而信道接入控制（MAC）协议大多采用CSMA（载波监测多址接入）类型的多址接入协议。这种结构的优点是：网络抗毁性好、建网容易、成本较低。这种结构的缺点是：当网络中用户数量（站点数量）过多时，激烈的信道竞争将直接降低网络性能。此外，为了满足任意两个站点均可直接通信，网络中的站点布局受环境限制较大。因此，这种网络结构仅适应于工作站数量相对较少（一般不超过15台）的工作群，并且这些工作站应离得足够近。</p>
-<p><img src="/images/wifi/6.png" alt="图2-3无中心网络的拓扑结构"></p>
+<p><img   class="lazyload" data-original="/images/wifi/6.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图2-3无中心网络的拓扑结构"></p>
 <p>（2）有中心网络</p>
 <p>有中心网络也成结构化网络，它由一个或多个无线AP以及一系列无线客户端构成，网络拓扑结构如图2-14所示。在有中心网络中，一个无线AP以及与其关联（Associate）的无线客户端被称为一个BSS（Basic Service Set，基本服务集），两个或多个BSS可构成一个ESS（Extended Service Set，扩展服务集）。</p>
-<p><img src="/images/wifi/7.png" alt="图2-4有中心网络的拓扑结构[4]"></p>
+<p><img   class="lazyload" data-original="/images/wifi/7.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图2-4有中心网络的拓扑结构[4]"></p>
 <p>有中心网络使用无线AP作为中心站，所有无线客户端对网络的访问均由无线AP控制。这样，当网络业务量增大时，网络吞吐性能及网络时延性能的恶化并不强烈。由于每个站点只要在中心站覆盖范围内就可与其他站点通信，故网络布局受环境限制比较小。此外，中心站为接入有线主干网提供了一个逻辑访问点。有中心网络拓扑结构的弱点是：抗毁性差，中心站点的故障容易导致整个网络瘫痪，并且中心站点的引入增加了网络成本。</p>
 <p>虽然在IEEE802.11标准中并没有明确定义构成ESS的分布式系统的结构，但目前大都是指以太网。ESS的网络结构只包含物理层和数据链路层，不包含网络层及其以上各层。因此，对于IP等高层协议IP来说，一个ESS就是IP子网。</p>
 <h3 id="5-4-Wi-Fi的传输方式"><a href="#5-4-Wi-Fi的传输方式" class="headerlink" title="5.4    Wi-Fi的传输方式"></a>5.4    Wi-Fi的传输方式</h3><p>传输方式设涉及无线局域网采用的传输媒体、选择的频段及调制方式。目前，无线局域网采用的传输媒体主要有两种，即微波与红外线。按照不同的调制方式，采用微波作为传输媒体的无线局域网又可分为扩展频谱方式与窄带调制方式。微波和红外线都属于电磁波。</p>
@@ -313,7 +383,7 @@
 <p>（1）Handshaking（握手）</p>
 <p>在传送数据前，发送方并不会立即把数据传送到网络上。因为发送方并不清楚接收方是否能立即处理数据。所以为了避免发送过去的数据被接收方“置之不理”，会先发送一个要求同步的handshaking requeests（握手要求）。</p>
 <p>当接收方收到这样的要求，而且接收方也有足够的资源接收时，就会返回响应要求的包。在发送和接收双方之间经过三次“握手”操作后，就能确立一条持续通信的网络连接。</p>
-<p><img src="/images/wifi/8.png" alt="图5-4-1三次握手"></p>
+<p><img   class="lazyload" data-original="/images/wifi/8.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  alt="图5-4-1三次握手"></p>
 <p>（2）寻找目的地（Finding the Destination）</p>
 <p>通常一个连接需要建立时，首先要确认连接是连接好的（即使是发送∕接受双方之间有路由器等设备，把双方分割的两个不同子网络之间连接也算在该范围之内）。但由于Wi-Fi是利用无线电波传送数据，所以在建立无线网络时并不需要有直接的设备连接。</p>
 <p>在传输介质能连接后，设备就一直处于连接状态，直到设备被断开电源。但是该状态的连接并没有附带任何可以作为实际应用中用到的信息，例如IP地址、路由信息等内容。所以，需要利用操作系统为这些连接进行初次系统级别的连接操作——handshaking。</p>
@@ -369,71 +439,216 @@
 </blockquote>
 </blockquote>
 <hr>
-<p>技术交流欢迎邮件至<a href="mailto:&#x63;&#x6f;&#108;&#x69;&#110;&#103;&#x75;&#111;&#x30;&#x39;&#x31;&#57;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;">&#x63;&#x6f;&#108;&#x69;&#110;&#103;&#x75;&#111;&#x30;&#x39;&#x31;&#57;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#111;&#x6d;</a></p>
-
-    </div>
-
-    <div class="about">
-        <h1>About this Post</h1>
-        <p>This post is written by 郭昊东, licensed under <a
-                target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc/4.0">CC BY-NC 4.0</a>.</p>
-    </div>
-</article>
-        <footer>
-    <div class="inner">
-        <div class="links">
-            
-            <div class="group">
-                <h4 class="title">Blog</h4>
-                
-                <a href="/" class="item" target="_blank">Blog</a>
-                
-                <a href="/archives" class="item" target="_blank">Archives</a>
-                
-                <a href="/friends" class="item" target="_blank">Friends</a>
-                
-                <a href="/projects" class="item" target="_blank">Projects</a>
-                
-                <a href="/about" class="item" target="_blank">About</a>
-                
-                <a href="/atom.xml" class="item" target="_blank">RSS</a>
-                
-            </div>
-            
-            <div class="group">
-                <h4 class="title">Projects</h4>
-                
-                <a href="https://github.com/transmister" class="item" target="_blank">Transmister</a>
-                
-                <a href="https://github.com/MrWillCom/css-and-js-windows-uwp-xaml-controls" class="item" target="_blank">CSS&amp;JS Windows UWP XAML Controls</a>
-                
-                <a href="https://github.com/MrWillCom/hexo-theme-cupertino" class="item" target="_blank">Theme Cupertino</a>
-                
-                <a href="https://github.com/MrWillCom/github-dark-mode" class="item" target="_blank">GitHub Dark Mode</a>
-                
-            </div>
-            
-            <div class="group">
-                <h4 class="title">Me</h4>
-                
-                <a href="https://github.com/Bigscholar" class="item" target="_blank">GitHub</a>
-                
-                <a href="https://codepen.io/mrwillcom" class="item" target="_blank">CodePen</a>
-                
-                <a href="https://www.patreon.com/MrWillCom" class="item" target="_blank">Patreon</a>
-                
-                <a href="mailto:hdbit1030@gmail.com" class="item" target="_blank">Email</a>
-                
-            </div>
-            
-        </div>
-        &copy; 2020 郭昊东<br />
-        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-</footer>
+<p>技术交流欢迎邮件至<a href="mailto:&#99;&#x6f;&#108;&#x69;&#110;&#103;&#117;&#111;&#48;&#57;&#49;&#x39;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#99;&#x6f;&#108;&#x69;&#110;&#103;&#117;&#111;&#48;&#57;&#49;&#x39;&#x40;&#103;&#109;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;</a></p>
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>郭昊东</li>
+  <li><strong>本文链接：</strong><a href="https://bigscholar.github.io/2017/12/28/%E6%B5%85%E8%B0%88Wi-Fi%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95%E4%B8%8E%E5%89%8D%E6%99%AF/index.html">https://bigscholar.github.io/2017/12/28/%E6%B5%85%E8%B0%88Wi-Fi%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95%E4%B8%8E%E5%89%8D%E6%99%AF/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="https://pic.izhaoo.com/alipay.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/Bigscholar.github.io/tags/tech/" rel="tag">tech</a></li></ul>
 
         
-<script src="/Bigscholar.github.io/js/main.js"></script>
+<nav class="nav">
+  
+    <a href="/Bigscholar.github.io/2018/01/03/%E6%9C%80%E4%BD%B3%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AEOLSR%E5%88%86%E6%9E%90/"><i class="iconfont iconleft"></i>最佳链路状态路由协议OLSR分析</a>
+  
+  
+    <a href="/Bigscholar.github.io/2017/11/07/%E5%9C%A8%E8%BF%99%E4%B8%AA%E6%9E%AB%E7%BA%A2%E8%8F%8A%E9%BB%84%E7%9A%84%E5%AD%A3%E8%8A%82/">在这个枫红菊黄的季节<i class="iconfont iconright"></i></a>
+  
+</nav>
 
-    </body>
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1600345204 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:hdbit1030@gmail.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Theme - <a target="_blank" href="https://github.com/Bigscholar">郭昊东</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+    
+<script src="/Bigscholar.github.io/js/color-mode.js"></script>
+
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/Bigscholar.github.io/js/utils.js"></script>
+<script src="/Bigscholar.github.io/js/modules.js"></script>
+<script src="/Bigscholar.github.io/js/zui.js"></script>
+<script src="/Bigscholar.github.io/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
 </html>
