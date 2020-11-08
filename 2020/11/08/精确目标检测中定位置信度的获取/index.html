@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" color-mode=light>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>精确目标检测中定位置信度的获取 - Hi，昊东</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+
+  
+  <meta name="keywords" content="undefined"> 
+  
+  <meta name="description" content="摘要当前基于CNN的目标检测器靠边界框回归和非极大值抑..."> 
+  
+  <meta name="author" content="郭昊东"> 
+
+  
+    <link rel="icon" href="/images/icons/favicon.png" type="image/png" sizes="16x16">
+  
+  
+    <link rel="icon" href="/images/icons/favicon.png" type="image/png" sizes="32x32">
+  
+  
+    <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  
+  
+    <meta rel="mask-icon" href="/images/icons/stun-logo.svg" color="#333333">
+  
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/favicon.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/Bigscholar.github.io/css/style.css">
+
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_onl0g0h21np.css">
+
+  
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+  
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        onlyPost: 'false',
+        loading: '/images/theme/loading.gif'
+      },
+      donate: {
+        enable: true,
+        alipay: '/images/alipay.png',
+        wechat: '/images/wechatpay.png'
+      },
+      motto: {
+        api: '',
+        default: '静水流深，沧笙踏歌'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        alwaysShow: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: true
+      }
+    }
+  </script>
+
+  
+
+  
+<meta name="generator" content="Hexo 5.2.0"></head>
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+
+
+<nav class="navbar">
+  <div class="left"></div>
+  <div class="center">精确目标检测中定位置信度的获取</div>
+  <div class="right">
+    
+      <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+    
+    <i class="iconfont iconmenu j-navbar-menu"></i>
+  </div>
+</nav>
+
+  <nav class="menu">
+  <div class="menu-wrap">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content">
+      
+      
+      
+      
+      <li class="menu-item"><a href="/ " class="underline"> 首页</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/galleries " class="underline"> 摄影</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/archives " class="underline"> 归档</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/tags " class="underline"> 标签</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/categories " class="underline"> 分类</a></li>
+      
+      
+      
+      
+      <li class="menu-item"><a href="/about " class="underline"> 关于</a></li>
+      
+    </ul>
+    <div class="menu-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Author - <a target="_blank" href="https://github.com/Bigscholar">郭昊东</a></p></div>
+  </div>
+</nav>
+  <main id="main">
+  <div class="container" id="container">
+    <article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="https://www.google.com/url?sa=i&url=https://www.cnblogs.com/xiaozhi_5638/p/11288118.html&psig=AOvVaw1oUgwvbfagjUKqMi4cqD0T&ust=1604884252997000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCMDAjvvh8ewCFQAAAAAdAAAAABAD" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">精确目标检测中定位置信度的获取</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>November 08, 2020</span
+        class="post-info-item">
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>8464</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>当前基于CNN的目标检测器靠边界框回归和非极大值抑制来定位目标。有类别标签的概率虽然在分类可信度上有合理的展示，但没有定位可信度。这使得定位的边框在边框回归过程中减少，甚至在nms过程中消失。在本文中，我们提出用IoU网络学习预测每个物体的边框和物体的实际位置之间的匹配度。此网络通过保持精确的定位边框，改进了NMS过程，得到了定位的可信度。此外, 还提出了一种基于优化的边框优化方法，预计的IoU显示，此方法较为客观。在MS-COCO数据集上的实验表明了IoU网络的有效性，以及它与多种形式的目标检测器的兼容性和适应性。</p>
+<p><strong>关键词：</strong> <em>目标检测，边框回归，非极大值抑制</em></p>
+<h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.    介绍"></a>1.    介绍</h1><p>目标检测是一系列下游视觉应用的先决条件，例如实例分割、人体骨架、人脸识别和高级基于对象的推理。其包含目标分类和目标定位两个部分。当前大多数目标检测器的框架基于两阶段，在这个框架下目标检测被描述为一个多任务学习问题：1）区分前景对象和背景对象，并为其分配适当的类标签；2）回归一组系数，该系数通过最大化交并比或者提高检测结果与目标实际位置之间相关性的其他指标来定位目标。最后，通过非最大抑制（NMS）过程移除冗余边框（即同一目标上的多个检测结果）。<br>下面举两个例子，对定位可信度缺失的两大弊端进行一个可视化分析。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/1.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p><em>(a)    分类置信度和定位精度不一致的实例：黄色边框表示实际目标位置，而红色和绿色边框都是FPN的检测结果[16]。其中的定位置信度由本文提出的IoU网络计算得出。在传统的NMS程序中，使用分类置信度作为排序的标准会导致精确定位的边框（绿色）被错误地删掉。本文第2.1节将提供定量的分析。</em></p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/2.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p><em>(b)    边框迭代中非单调定位的案例，本文将在第2.2节提供定量分析。示例选自MS-COCO minival[17]。</em></p>
+<p>在目标检测的技术中，分类和定位利用的是不同的方法。具体来说，给定一系列目标建议框，对每个框进行分类得到各类别标签的概率，这个概率可以用来做该提议框的“分类置信度”，而边框的回归模块却只是预测针对该建议框的变换系数，以拟合目标物体的位置。在这个过程中缺失了“定位置信度”。<br>定位置信度的缺失带来了两个缺点：</p>
+<ol>
+<li>为了抑制重复检测，会给检测框进行排名。由于定位置信度的缺失，分类分数通常被用作给检测狂排名的指标。如图1（a）中的案例所示，绿色边框相比红色边框拥有更高的分类置信度，然而相比红色边框却拥有比绿色边框更高的重叠度。因此就像 Gresham 著名的 “劣币驱逐良币”理论一样，分类置信度和定位准确度之间的不匹配可能会导致定位更准确的边界框在NMS过程中反而被相对不准确的边框抑制了。</li>
+<li>定位置信度的缺失使得广泛使用的边界框回归方法缺少可解释性。例如，在之前的某研究中发现，如果多次应用边框回归，可能有损输入边框的定位效果。</li>
+</ol>
+<h1 id="2-目标定位的研究"><a href="#2-目标定位的研究" class="headerlink" title="2.    目标定位的研究"></a>2.    目标定位的研究</h1><p>首先，研究者探讨了目标定位中的两个缺点：分类置信度与定位精度的偏差和非单调边框回归。标准FPN[16]探测器以MS-COCO trainval35k为基线进行训练，并在minival上进行测试。</p>
+<h2 id="2-1-分类准确度和定位准确度不匹配"><a href="#2-1-分类准确度和定位准确度不匹配" class="headerlink" title="2.1.    分类准确度和定位准确度不匹配"></a>2.1.    分类准确度和定位准确度不匹配</h2><p>为了消除重复的边界盒，自[4]以来，NMS一直是大多数目标检测器中不可或缺的部分。NMS以迭代的方式工作，每次迭代会选择具有最大分类置信度的边框，并使用预定义的阈值消除相邻边框。在软NMS[2]算法中，边框消除被置信度的递减量所代替，从而导致较高的召回率。近年来，人们提出了一套基于学习的算法来代替无参数的网络管理系统和软网络管理系统。[24]计算所有边框的重叠矩阵，并执行关联传播聚类以选择簇的样本作为最终检测结果。[11]提出了GossipNet，一种基于边界框和分类置信度的NMS后处理网络。[12]提出了一种端到端网络学习检测到的边界框之间的关系。然而，这些基于参数的方法需要很多的计算资源，这限制了它们的实际应用。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/3.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p><em>图2：边界框与其对应目标框的交并比与分类置信度、定位置信度之间的关系，对那些与目标框的交并比高于0.5的检测框，其pearson相关系数为(a)0.217和(b)0.617。左图分类置信度表示了一个边界框的类别，但不能被解读成定位准确度，右图为了解决这个问题，研究者提出了IoU-Net来预测每个检测到的边界框的定位置信度，即与其对应目标框的IoU。</em></p>
+<p>在广泛采用的NMS方法中，分类置信度用于对边界框进行排序，这可能会产生问题。研究者将所有检测到的边界框在NMS之前的分类可信度的分布进行了可视化处理，如图2（a）所示。x轴是检测到的边框与其匹配的真实值之间的IoU，而y轴表示其分类置信度。pearson相关系数表明定位精度与分类置信度的相关性并不高。</p>
+<p>这归因于大多数基于CNN的目标检测器在区分前景（正）和背景（负）样本时所使用的目标。如果检测到的边界框与其中一个真实边界框的交并比大于Ωtrain，则在训练期间，检测到的边框boxdet被视为是有用的。这个目标可能与定位精度不一致。图1（a）显示了具有较高分类可信度的边界框却定位较差的情况。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/4.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p><em>图3：经过NMS之后得到的正例边框的数量，根据它们与对应的目标之间的IoU分组。在传统NMS中（蓝色条形图），定位准确的边框中有很大一部分会被错误抑制，这是由分类置信度和定位置信度之间的不匹配造成的，而IoU引导式NMS（黄色条形图）则能保留定位更准确的边框。</em></p>
+<p>回想传统的NMS中，当存在对单个对象的重复检测时，将保留具有最大分类置信度的边界框。然而，由于定位误差的存在，在NMS中可能会抑制定位效果较好的边框，导致目标定位效果较差。图3定量地显示了NMS后正边界框的数量。边框按其匹配的真实目标位置的IoU分组。对于同一个基本目标匹配的多个检测结果，只有IoU最高的一个被认为是有效的。因此，无NMS可以看作有效边框数量的上限。可以看出，在传统的NMS方法中，定位置信度的缺失使得超过一半的IoU&gt;0.9的边界框被抑制，从而降低了检测结果的定位质量。</p>
+<h2 id="2-2-非单调的边框回归"><a href="#2-2-非单调的边框回归" class="headerlink" title="2.2.    非单调的边框回归"></a>2.2.    非单调的边框回归</h2><p>一般来说，单目标定位可分为两类：基于边框的方法和基于分段的方法。基于分段的方法[19,20,13,10]旨在为每个实例生成一个像素级的片段，但不需要额外的分割注释。本文主要研究基于边界盒的方法。</p>
+<p>单目标定位通常被描述为一个边界盒回归任务。其核心思想是网络直接学习将边界框转换（即缩放或移位）到其指定目标。在[9,8]中，应用线性回归或全连通层来细化由外部预处理模块（例如，选择性搜索[28]或Edgebox[33]）生成的目标建议的本地化。更快的R-CNN[23]提出了区域建议网络（RPN），其中只使用预定义的锚来训练端到端的目标检测器。[14,32]利用无锚、完全卷积的网络来处理对象尺度变化。同时，在[29]中提出了排斥损失的概念，以鲁棒地检测人群遮挡下的目标。由于其有效性和简单性，边界盒回归已成为大多数基于CNN的检测器的重要组成部分。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/5.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p><em>图4：基于优化的与基于回归的BBS优化。左图在FPN中比较。当迭代式地应用回归时，检测结果的AP（平均精度）首先会提升，但会在之后的迭代中快速降低。右图在Cascade R-CNN中比较。迭代0、1、2表示Cascade R-CNN中的第1、2、3个回归阶段。在多轮回归之后，AP稍有下降，而基于优化的方法则进一步将AP提高了0.8%。</em></p>
+<p>广泛的下游应用程序（如跟踪和识别）将受益于精确定位的边界框。这就对提高定位精度提出了要求。在一系列的目标检测器[31,7,6,21]中，细化后的盒将被再次送入边界盒回归器，并再次进行细化。此过程分多次执行，即迭代边界盒回归。更快的R-CNN[23]首先执行两次边界框回归，将预定义的锚定转换为最终检测到的边界框。[15] 提出了一种群体递归学习方法，在考虑多个方案之间的全局相关性的情况下，迭代地优化检测结果，最小化目标建议与背景真相之间的偏差。G-CNN是在[18]中提出的，它从图像上的多尺度规则网格开始，迭代地将网格中的长方体推向地面-但事实上，如[3]中所述，应用边界框回归多于twice不会带来进一步的改进。[3] 将其归因于多步边界盒回归中的分布不匹配，并通过多阶段边界盒回归中的重采样策略解决此问题。</p>
+<p>实验证明了基于FPN和级联R-CNN框架的迭代边界盒回归算法的性能。每次迭代后结果的平均精度（AP）分别如图4（a）和图4（b）中的蓝色曲线所示。图4中的AP曲线表明，对于迭代边界盒回归，随着迭代次数的增加，定位精度的提高是非单调的。非单调性和不可解释性给应用带来了困难。另外，如果没有检测到的边界框的局部化置信度，研究者就不能对细化进行细粒度控制，例如对不同的边界框使用自适应的迭代次数。</p>
+<h1 id="3-IoU网络"><a href="#3-IoU网络" class="headerlink" title="3.    IoU网络"></a>3.    IoU网络</h1><pre><code>为了定量分析IoU预测的有效性，研究者在第3.1节中首先介绍了训练IoU预测器所采用的方法。在第3.2节和第3.3节中，研究者分别展示了如何使用IoU预测器进行NMS和边界盒细化。最后，在第3.4节中，研究者将IoU 预测器集成到现有的目标检测器中，如FPN[16]</code></pre>
+<h2 id="3-1-训练IoU预测器的方法"><a href="#3-1-训练IoU预测器的方法" class="headerlink" title="3.1.    训练IoU预测器的方法"></a>3.1.    训练IoU预测器的方法</h2><p><img   class="lazyload" data-original="/images/2020.11.8OD/6.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p><em>图5：研究者提出的IoU-Net的完整架构，详见3.4节。输入图像首先输入一个FPN骨干网络。然后IoU预测器读取这个FPN骨干网络的输出特征。研究者用PrRoI池化层代替了RoI池化层，详见3.3节。这个IoU预测器与R-CNN分支具有相似的结果。虚线框内的模块能构成一个单独的IoU-Net。</em></p>
+<p>如图5所示，IoU预测器从FPN获取视觉特征，并估计每个边界框的定位精度（IoU）。研究者通过增加基本事实，而不是从RPN获取建议，生成用于训练IoU网络的资金箱和标签。具体地说，对于训练集中的所有地面真实边界框，研究者用一组随机参数对它们进行手动变换，得到一个候选边界框集。然后，研究者从候选集合中移除IoU小于Ωtrain=0.5且匹配地面真相的边界框。研究者统一从这个候选者集合中抽取训练数据。这种数据生成过程在经验上给IoU网络带来了更好的性能和健壮性。对于每个边界框，特征是从FPN的输出中提取的，该输出具有建议的PreciseRoI池层（见第3.3节）。然后将这些特征输入两层前馈网络进行IoU预测。为了获得更好的性能，研究者使用类感知IoU预测器。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/7.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br><em>算法1：基于优化的边框修正</em></p>
+<h2 id="3-2-IoU引导的NMS"><a href="#3-2-IoU引导的NMS" class="headerlink" title="3.2.    IoU引导的NMS"></a>3.2.    IoU引导的NMS</h2><p>研究者用一种新的IoU引导的NMS程序来解决分类可信度和定位精度之间的偏差，这个程序中分类可信度和定位置信度（IoU的估计值）是分离开的。总的来说，研究者使用预测的IoU代替分类置信度作为边界框的排名关键字。与传统NMS类似，将选择具有最高IoU和地面真实值的盒子，以消除重叠大于给定阈值Ωnms的分配盒。为了确定分类分数，当boxi 消除为boxj时，研究者更新boxi si=max（si，sj）的分类置信度。这个过程也可以理解为一个置信聚类：对于一组匹配同一个基本事实的边界盒，研究者对类标签进行最有信心的预测，在算法中可以找到该算法的psuedo代码。</p>
+<p>IoU引导下的NMS解决了分类可信度与定位精度之间的偏差问题。定量结果表明，研究者的方法优于传统NMS和其他变体，如软NMS[2]。使用IoU引导的NMSA，后处理器进一步提高了几种最先进的目标探测器的性能。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/8.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<h2 id="3-3-边框选取的优化方法"><a href="#3-3-边框选取的优化方法" class="headerlink" title="3.3.    边框选取的优化方法"></a>3.3.    边框选取的优化方法</h2><p>边框优化问题可以用数学方法表示为寻找最优的c∗s.t</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/9.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p>其中boxdet是检测到的边界框，boxgt是一个（目标）实际边框，transform是一个边框转换函数，它使用c作为参数并转换给定的边界框。crit是衡量两个边界框之间距离的标准。在最初的Fast R-CNN[5]框架中，crit表示选择对数标度的平滑-L1坐标距离，而在[32]中，critis选择为两个边界框之间的−ln（IoU）。</p>
+<p>基于回归的算法用前馈神经网络直接估计最优解C＊。然而，迭代边框回归方法容易受到输入分布的变化的影响[3]，并且可能导致非单调的位置提高，如图4所示。为了解决这些问题，研究者提出了一种基于优化的边界盒优化方法，利用IoU-Net作为一种稳定的定位精度（IoU）预测器。此外，IoU预测器可以作为一个早期停止条件来实现具有自适应步骤的迭代优化。</p>
+<p>IoU-Net直接估算IoU (boxdet, boxgt)。虽然本文提出的精度池化层可以计算IoU w.r.t.边界框坐标§的梯度，但研究者可以直接使用梯度上升法来找到函数1的最优解。如算法2所示，研究者以IoU的估计为优化目标，用计算的梯度迭代地细化边界盒坐标，使检测到的边界盒与其匹配的地面真实度之间的IoU最大化。此外，预测的IoU是每个边界框上定位置信度的一个可解释的指标，有助于解释所执行的转换。</p>
+<p>在实现中，如算法2第6行所示，研究者手动放大梯度w.r.t.坐标与该轴上边界框的大小（例如，研究者用宽度（bj）放大∇x1）。这相当于在对数标度坐标（x/w, y/h, log w, log h）中执行优化，如[5]所示。研究者还采用了一步边界盒回归来初始化坐标。</p>
+<p><strong>精准 RoI 池化（Precise RoI Pooling）。</strong>本文引入了精准 RoI 池化（简写成：PrRoI 池化）来助力研究者的边界框修正。其没有任何坐标量化，而且在边界框坐标上有连续梯度。给定 RoI/PrRoI 池化前的特征图 F（比如，来自 ResNet-50 中的 Conv4），设 wi, j 是该特征图上一个离散位置 (i, j) 处的特征。使用双线性插值，这个离散的特征图可以被视为在任意连续坐标 (x, y) 处都是连续的：</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/10.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p>其中，IC(x, y, I, j)=max(0, 1-|x-i|) x max(0, 1-|y-i|)是插值系数。然后将RoI的一个bin表示为bin={(x1, y1), (x2, y2)}，其中(x_1, y_1)和(x_2, y_2)分别是左上角和右下角的连续坐标。给定bin和特征图F，本文通过计算一个二阶积分来执行池化（如平均池化）：</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/11.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
+<p>为更便于理解，研究者在图6中可视化了RoI池化、RoI Align[10]和研究者的 PrRoI池化：在传统的RoI池化中，连续坐标首先需要被量化（quantization），以计算该bin中激活的和；为了消除量化误差，在RoI Align中，会采样该bin 中N=4个连续点，表示成 (a_i,b_i)，而池化就是在这些采样的点上执行的。RoI Align 中的N是预定义的，而且不能根据bin的大小进行调整；与此不同，研究者提出的PrRoI池化是直接基于连续特征图计算二阶积分。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/12.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br><em>图6：RoI池化、RoI Align和PrRoI池化的图示</em></p>
+<h2 id="3-4-联合训练"><a href="#3-4-联合训练" class="headerlink" title="3.4.    联合训练"></a>3.4.    联合训练</h2><p>这种IoU预测器可集成到标准的FPN流程中，以进行端到端的训练和推理。为了清楚说明，研究者将用于图像特征提取的CNN架构称为骨干（backbone），将应用于各个RoI的模块称为头（head）。</p>
+<p>如图5所示，这个IoU-Net使用了ResNet-FPN [16]作为骨干网络，其架构是自上而下的，可构建特征金字塔（feature pyramid）。FPN能根据RoI的特征的比例从这个特征金字塔的不同层级提取这些RoI的特征。其中原来的RoI池化层被换成了精准RoI池化层。至于该网络的头，这个IoU预测器根据来自骨干网络的同一视觉特征而与R-CNN分支（包括分类和边界框回归）并行工作。</p>
+<p>研究者根据在ImageNet [25]上预训练的ResNet模型初始化了权重。所有新的层都使用了标准差为0.01或0.001的零均值高斯分布进行初始化。研究者使用了平滑L1损失来训练IoU预测器。IoU预测器的训练数据是在一个训练批中的图像中单独生成的，详见1节。IoU标签进行了归一化，因此其值分布在[-1,1]。</p>
+<p>输入图像的大小进行了调节，短边长度为800像素，长边长度最大为1200 像素。分类和回归分支取来自RPN的每张图像512RoI。研究者使用了16的批大小进行训练。网络为16万次迭代进行了优化，学习率设置为0.01，并在12万次迭代后减小10倍。研究者还为前1万次迭代设置了0.004的学习率以进行预热。研究者使用了1e-4的权重衰减和0.9的momentum.</p>
+<p>在推理过程中，研究者首先对初始坐标应用边界框回归。为了加快推理速度，研究者首先在所有检测到的边界框上应用IoU引导式NMS。然后，使用基于优化的算法进一步改进100个有最高分类置信度的边界框。研究者设置步长为 λ=0.5，早停阈值为Ω1=0.001，定位衰减容限Ω2=−0.01，迭代次数T=5。</p>
+<h1 id="4-实验"><a href="#4-实验" class="headerlink" title="4.    实验"></a>4.    实验</h1><p>研究者在有80个类别的MS-COCO检测数据集[17]上进行了实验。遵照 [1,16]，研究者在8万张训练图像和3.5万张验证图像的并集（trainval35k）上训练了模型，并在包含5000张验证图像的集合（minival）上评估了模型。为验证该方法，在1节和2节，研究者与目标检测器分开而训练了一个独立的 IoU-Net（没有R-CNN模块）。IoU-Net助力的IoU引导式NMS和基于优化的边界框修正被应用在了检测结果上。</p>
+<h2 id="4-1-IoU引导的NMS"><a href="#4-1-IoU引导的NMS" class="headerlink" title="4.1.    IoU引导的NMS"></a>4.1.    IoU引导的NMS</h2><p>表1总结了不同NMS方法的表现。尽管Soft-NMS能保留更多边界框（其中没有真正的“抑制”），但IoU引导式NMS还能通过改善检测到的边界框的定位来提升结果。因此，在高IoU指标（比如AP_90）上，IoU引导式NMS显著优于基准方法。</p>
+<p>研究者通过分析不同IoU阈值下的召回率，深入研究了不同NMS算法的效果。检测到的原始边界框由不带任何NMS的ResNet50 FPN生成。随着对局部化精度要求的提高，IoU引导的NMS与其它方法的性能差距越来越大。特别是，匹配IoUΩtest=0.9时的召回率在传统NMS后下降到18.7%，而IoU-NMS达到28.9%，没有NMS的“上限”为39.7%。</p>
+<h2 id="4-2-基于优化的边框选取"><a href="#4-2-基于优化的边框选取" class="headerlink" title="4.2.    基于优化的边框选取"></a>4.2.    基于优化的边框选取</h2><p>研究者提出的基于优化的边界盒细化与大多数基于CNN的目标检测器兼容[16,3,10]，如表2所示。在原有管线经得起内网的基础上应用边界盒细化，进一步提高了对象的定位性能准确地说即使对于具有三级边界盒回归器的级联R-CNN，细化后的ap90进一步提高了2.8%，整体AP提高了0.8%。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/13.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br><em>表1：IoU引导式NMS与其他NMS方法的比较。通过保留定位精确的边框，IoU引导式NMS在具有高匹配IoU调值的AP（比如AP_90）上的表现显著更优。</em></p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/14.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br><em>图7：在匹配检测到的边界框与真实目标框的不同IoU阈值下，不同NMS方法的召回率曲线。研究者提供了NMS（不抑制边框）有更高的召回率，并且在高IoU阈值（比如0.8）下能有效收窄与上限的差距。</em></p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/15.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br><em>表2：基于优化的边界框修正能进一步提升多种基于CNN的目标检测器的表现</em></p>
+<h2 id="4-3-联合训练"><a href="#4-3-联合训练" class="headerlink" title="4.3.    联合训练"></a>4.3.    联合训练</h2><p>IoU-Net可与目标检测框架一起并行地端到端优化。研究者发现，将IoU预测器添加到网络中有助于网络学习更具判别性的特征，这能分别将 ResNet50-FPN和ResNet101-FPN的整体AP提升0.6%和0.4%。IoU引导式NMS和边界框修正还能进一步提升表现。研究者使用ResNet101-FPN得到了 40.6%的AP，相比而言基准为38.5%，提升了2.1%。表4给出了推理速度，表明IoU-Net可在计算成本承受范围之内实现检测水平的提升。</p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/16.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br><em>表3：在MS-COCO上的最终实验结果。IoU-Net表示嵌入IoU预测器的ResNet-FPN。在这个FPN基准上，研究者提出了约2%的AP提升。</em></p>
+<p><img   class="lazyload" data-original="/images/2020.11.8OD/17.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ><br><em>表4：多种目标检测器在单个TITAN X GPU上得到的推理速度。这些模型都有一样的骨干网络ResNet50-FPN。输入分辨率为1200x800。所有超参数设置相同。</em></p>
+<h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5.    总结"></a>5.    总结</h1><p>本文提出一种用于准确目标定位的全新网络架构IoU-Net。通过学习预测与对应真实目标的IoU，IoU-Net可检测到的边界框的“定位置信度”，实现一种IoU引导式NMS流程，从而防止定位更准确的边界框被抑制。IoU-Net很直观，可轻松集成到多种不同的检测模型中，大幅提升定位准确度。MS-COCO 实验结果表明了该方法的有效性和实际应用潜力。</p>
+<p>从学术研究的角度，本文指出现代检测流程中存在分类置信度和定位置信度不匹配的问题。更进一步，研究者将边界框修正问题重定义为一个全新的优化问题，并提出优于基于回归方法的解决方案。研究者希望这些新视角可以启迪未来的目标检测工作。</p>
+<h1 id="6-参考文献"><a href="#6-参考文献" class="headerlink" title="6.    参考文献"></a>6.    参考文献</h1><p>见原文</p>
+
+      </section>
+      <section class="extra">
+        
+        <ul class="copyright">
+  
+  <li><strong>本文作者：</strong>郭昊东</li>
+  <li><strong>本文链接：</strong><a href="https://bigscholar.github.io/2020/11/08/%E7%B2%BE%E7%A1%AE%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%AD%E5%AE%9A%E4%BD%8D%E7%BD%AE%E4%BF%A1%E5%BA%A6%E7%9A%84%E8%8E%B7%E5%8F%96/index.html">https://bigscholar.github.io/2020/11/08/%E7%B2%BE%E7%A1%AE%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%AD%E5%AE%9A%E4%BD%8D%E7%BD%AE%E4%BF%A1%E5%BA%A6%E7%9A%84%E8%8E%B7%E5%8F%96/index.html</a></li>
+  <li><strong>版权声明：</strong>本博客所有文章均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"
+      rel="external nofollow" target="_blank"> BY-NC-SA </a>许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        <section class="donate">
+  <div class="qrcode">
+    <img   class="lazyload" data-original="/images/alipay.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" >
+  </div>
+  <div class="icon">
+    <a href="javascript:;" id="alipay"><i class="iconfont iconalipay"></i></a>
+    <a href="javascript:;" id="wechat"><i class="iconfont iconwechat-fill"></i></a>
+  </div>
+</section>
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/Bigscholar.github.io/tags/%E6%96%87%E7%8C%AE%E7%BF%BB%E8%AF%91/" rel="tag">文献翻译</a></li></ul>
+
+        
+<nav class="nav">
+  
+  
+    <a href="/Bigscholar.github.io/2020/08/17/%E4%BA%91%E6%95%A3%E9%9B%BE%E6%B6%88%E6%97%A0%E5%A4%84%E9%97%AE%EF%BC%8C%E4%B8%8D%E8%A7%81%E5%8D%8E%E5%8F%91%E4%B8%8E%E8%A1%B0%E7%BF%81/">云散雾消无处问，不见华发与衰翁<i class="iconfont iconright"></i></a>
+  
+</nav>
+
+      </section>
+      
+      <section class="comments">
+  
+  <div class="btn" id="comments-btn">查看评论</div>
+  
+  
+</section>
+      
+    </section>
+  </div>
+</article>
+  </div>
+</main>
+  <footer class="footer">
+  <div class="footer-social">
+    
+    
+    
+    
+    
+    <a href="tencent://message/?Menu=yes&uin=1600345204 " target="_blank" onMouseOver="this.style.color= '#12B7F5'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconQQ "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="javascript:; " target="_blank" onMouseOver="this.style.color= '#09BB07'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconwechat-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://www.instagram.com/izhaoo/ " target="_blank" onMouseOver="this.style.color= '#DA2E76'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconinstagram "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="https://github.com/izhaoo " target="_blank" onMouseOver="this.style.color= '#24292E'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  icongithub-fill "></i>
+    </a>
+    
+    
+    
+    
+    
+    <a href="mailto:hdbit1030@gmail.com " target="_blank" onMouseOver="this.style.color='#FFBE5B'"
+      onMouseOut="this.style.color='#33333D'">
+      <i class="iconfont footer-social-item  iconmail"></i>
+    </a>
+    
+  </div>
+  <div class="footer-copyright"><p>Powered by <a target="_blank" href="https://hexo.io">Hexo</a>  |  Author - <a target="_blank" href="https://github.com/Bigscholar">郭昊东</a></p></div>
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  <div class="fab fab-daovoice">
+    <i class="iconfont iconcomment"></i>
+  </div>
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+    
+<script src="/Bigscholar.github.io/js/color-mode.js"></script>
+
+  
+</body>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/Bigscholar.github.io/js/utils.js"></script>
+<script src="/Bigscholar.github.io/js/modules.js"></script>
+<script src="/Bigscholar.github.io/js/zui.js"></script>
+<script src="/Bigscholar.github.io/js/script.js"></script>
+
+
+
+
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i["DaoVoiceObject"] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    a.charset = "utf-8";
+    m.parentNode.insertBefore(a, m)
+  })(window, document, "script", ('https:' == document.location.protocol ? 'https:' : 'http:') +
+    "//widget.daovoice.io/widget/0f81ff2f.js", "daovoice")
+  daovoice('init', {
+    app_id: "abcdefg"
+  }, {
+    launcher: {
+      disableLauncherIcon: true,
+    },
+  });
+  daovoice('update');
+</script>
+
+
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?4c204d8bc027a0455b5fc642ac334ca8";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+</html>
