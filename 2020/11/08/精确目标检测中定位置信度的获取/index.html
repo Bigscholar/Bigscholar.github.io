@@ -179,16 +179,16 @@
       <span class="post-info-item"><i class="iconfont iconcalendar"></i>November 08, 2020</span
         class="post-info-item">
       
-      <span class="post-info-item"><i class="iconfont iconfont-size"></i>8469</span>
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>8471</span>
     </div>
   </div>
 </section>
     <section class="main">
       <section class="content">
         <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1807.11590">原文</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/aoru45/p/11929789.html">参考</a></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>当前基于CNN的目标检测器靠边界框回归和非极大值抑制来定位目标。有类别标签的概率虽然在分类可信度上有合理的展示，但没有定位可信度。这使得定位的边框在边框回归过程中减少，甚至在nms过程中消失。在本文中，我们提出用IoU网络学习预测每个物体的边框和物体的实际位置之间的匹配度。此网络通过保持精确的定位边框，改进了NMS过程，得到了定位的可信度。此外, 还提出了一种基于优化的边框优化方法，预计的IoU显示，此方法较为客观。在MS-COCO数据集上的实验表明了IoU网络的有效性，以及它与多种形式的目标检测器的兼容性和适应性。</p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>当前基于CNN的目标检测器靠边界框回归和非极大值抑制来定位目标。类别标签的概率虽然可以表示分类置信度，但不能表示定位置信度。这使得定位的边框数量在边框回归过程中减少，甚至在nms过程中消失。在本文中，研究者提出用IoU网络学习预测每个物体的边框和物体的实际位置之间的匹配度。此网络通过保持精确的定位边框，改进了NMS过程，取得了较好的定位置信度。此外，还提出了一种基于优化的边框修正方法，IoU预测器显示，此方法较为客观。最后，在MS-COCO数据集上的实验表明了IoU网络的有效性，以及它与多种形式的目标检测器的兼容性和适应性。</p>
 <p><strong>关键词：</strong> <em>目标检测，边框回归，非极大值抑制</em></p>
-<h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.    介绍"></a>1.    介绍</h1><p>目标检测是一系列下游视觉应用的先决条件，例如实例分割、人体骨架、人脸识别和高级基于对象的推理。其包含目标分类和目标定位两个部分。当前大多数目标检测器的框架基于两阶段，在这个框架下目标检测被描述为一个多任务学习问题：1）区分前景对象和背景对象，并为其分配适当的类标签；2）回归一组系数，该系数通过最大化交并比或者提高检测结果与目标实际位置之间相关性的其他指标来定位目标。最后，通过非最大抑制（NMS）过程移除冗余边框（即同一目标上的多个检测结果）。<br>下面举两个例子，对定位可信度缺失的两大弊端进行一个可视化分析。</p>
+<h1 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.    介绍"></a>1.    介绍</h1><p>目标检测是一系列下游视觉应用的基础，例如实例分割、人体骨架、人脸识别和高级基于对象的推理。其包含目标分类和目标定位两个部分。当前大多数目标检测器的框架基于两阶段，在这个框架下目标检测被描述为一个多任务学习问题：1）区分前景对象和背景对象，并为其分配适当的类标签；2）回归一组系数，该系数通过最大化交并比或者提高检测结果与目标实际位置之间相关性的其他指标来定位目标。最后，通过非最大抑制（NMS）过程移除冗余边框（即同一目标上的多个检测结果）。<br>下面举两个例子，对定位可信度缺失的两大弊端进行一个可视化分析。</p>
 <p><img   class="lazyload" data-original="/images/2020.11.8OD/1.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
 <p><em>(a)    分类置信度和定位精度不一致的实例：黄色边框表示实际目标位置，而红色和绿色边框都是FPN的检测结果[16]。其中的定位置信度由本文提出的IoU网络计算得出。在传统的NMS程序中，使用分类置信度作为排序的标准会导致精确定位的边框（绿色）被错误地删掉。本文第2.1节将提供定量的分析。</em></p>
 <p><img   class="lazyload" data-original="/images/2020.11.8OD/2.png" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" ></p>
